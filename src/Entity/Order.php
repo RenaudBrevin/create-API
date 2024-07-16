@@ -23,12 +23,6 @@ class Order
     #[ORM\Column]
     private ?int $tableNumber = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orders')]
-    private ?user $waiter = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orders')]
-    private ?user $barman = null;
-
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
@@ -57,30 +51,6 @@ class Order
     public function setTableNumber(int $tableNumber): static
     {
         $this->tableNumber = $tableNumber;
-
-        return $this;
-    }
-
-    public function getWaiter(): ?user
-    {
-        return $this->waiter;
-    }
-
-    public function setWaiter(?user $waiter): static
-    {
-        $this->waiter = $waiter;
-
-        return $this;
-    }
-
-    public function getBarman(): ?user
-    {
-        return $this->barman;
-    }
-
-    public function setBarman(?user $barman): static
-    {
-        $this->barman = $barman;
 
         return $this;
     }
