@@ -24,10 +24,10 @@ class Order
     private ?int $tableNumber = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
-    private ?user $waiter = null;
+    private ?User $waiter = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
-    private ?user $barman = null;
+    private ?User $barman = null;
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
@@ -61,24 +61,24 @@ class Order
         return $this;
     }
 
-    public function getWaiter(): ?user
+    public function getWaiter(): ?User
     {
         return $this->waiter;
     }
 
-    public function setWaiter(?user $waiter): static
+    public function setWaiter(?User $waiter): static
     {
         $this->waiter = $waiter;
 
         return $this;
     }
 
-    public function getBarman(): ?user
+    public function getBarman(): ?User
     {
         return $this->barman;
     }
 
-    public function setBarman(?user $barman): static
+    public function setBarman(?User $barman): static
     {
         $this->barman = $barman;
 
