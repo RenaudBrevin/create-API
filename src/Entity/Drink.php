@@ -5,9 +5,32 @@ namespace App\Entity;
 use App\Repository\DrinkRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 
 #[ORM\Entity(repositoryClass: DrinkRepository::class)]
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext: ['groups' => ['drink:read']],
+    denormalizationContext: ['groups' => ['drink:write']],
+    operations: [
+        new GetCollection(),
+        new Post(),
+        new Get(),
+        new Put(),
+        new Patch(),
+        new Delete(),
+    ],
+)]
+#[Post(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_BOSS')")]
+#[Get(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_BOSS')")]
+#[Put(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_BOSS')")]
+#[Patch(security: "is_granted('ROLE_BOSS')")]
+#[Delete(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_BOSS')")]
 class Drink
 {
     #[ORM\Id]
@@ -22,7 +45,7 @@ class Drink
     private ?float $price = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?media $picture = null;
+    private ?Media $picture = null;
 
     public function getId(): ?int
     {
@@ -53,12 +76,12 @@ class Drink
         return $this;
     }
 
-    public function getPicture(): ?media
+    public function getPicture(): ?Media
     {
         return $this->picture;
     }
 
-    public function setPicture(?media $picture): static
+    public function setPicture(?Media $picture): static
     {
         $this->picture = $picture;
 

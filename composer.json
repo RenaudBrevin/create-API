@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/core": "^3.3",
@@ -12,23 +12,26 @@
         "doctrine/doctrine-bundle": "^2.12",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.2",
+        "lexik/jwt-authentication-bundle": "^3.1",
         "nelmio/cors-bundle": "^2.5",
         "phpdocumentor/reflection-docblock": "^5.4",
         "phpstan/phpdoc-parser": "^1.29",
-        "symfony/asset": "6.4.*",
-        "symfony/console": "6.4.*",
-        "symfony/dotenv": "6.4.*",
-        "symfony/expression-language": "6.4.*",
+        "symfony/asset": "7.1.*",
+        "symfony/console": "7.1.*",
+        "symfony/dotenv": "7.1.*",
+        "symfony/expression-language": "7.1.*",
         "symfony/flex": "^2",
-        "symfony/framework-bundle": "6.4.*",
-        "symfony/property-access": "6.4.*",
-        "symfony/property-info": "6.4.*",
-        "symfony/runtime": "6.4.*",
-        "symfony/security-bundle": "6.4.*",
-        "symfony/serializer": "6.4.*",
-        "symfony/twig-bundle": "6.4.*",
-        "symfony/validator": "6.4.*",
-        "symfony/yaml": "6.4.*"
+        "symfony/framework-bundle": "7.1.*",
+        "symfony/property-access": "7.1.*",
+        "symfony/property-info": "7.1.*",
+        "symfony/runtime": "7.1.*",
+        "symfony/security-bundle": "7.1.*",
+        "symfony/serializer": "7.1.*",
+        "symfony/twig-bundle": "7.1.*",
+        "symfony/uid": "7.1.*",
+        "symfony/validator": "7.1.*",
+        "symfony/yaml": "7.1.*",
+        "vich/uploader-bundle": "*"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.60"
@@ -58,7 +61,8 @@
         "symfony/polyfill-php73": "*",
         "symfony/polyfill-php74": "*",
         "symfony/polyfill-php80": "*",
-        "symfony/polyfill-php81": "*"
+        "symfony/polyfill-php81": "*",
+        "symfony/polyfill-php82": "*"
     },
     "scripts": {
         "auto-scripts": {
@@ -78,7 +82,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.4.*"
+            "require": "7.1.*"
         }
     }
 }
