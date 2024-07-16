@@ -22,7 +22,7 @@ class Drink
     private ?float $price = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?media $picture = null;
+    private ?Media $picture = null;
 
     public function getId(): ?int
     {
@@ -53,12 +53,12 @@ class Drink
         return $this;
     }
 
-    public function getPicture(): ?media
+    public function getPicture(): ?Media
     {
         return $this->picture;
     }
 
-    public function setPicture(?media $picture): static
+    public function setPicture(?Media $picture): static
     {
         $this->picture = $picture;
 
