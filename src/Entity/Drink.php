@@ -26,11 +26,11 @@ use ApiPlatform\Metadata\Delete;
         new Delete(),
     ],
 )]
-#[Post(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_PATRON')")]
-#[Get(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_PATRON')")]
-#[Put(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_PATRON')")]
+#[Post(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_BOSS')")]
+#[Get(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_BOSS')")]
+#[Put(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_BOSS')")]
 #[Patch(security: "is_granted('ROLE_BOSS')")]
-#[Delete(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_PATRON')")]
+#[Delete(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_BOSS')")]
 class Drink
 {
     #[ORM\Id]
