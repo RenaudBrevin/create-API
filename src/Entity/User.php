@@ -22,8 +22,6 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use App\State\UserPasswordHasherProcessor;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
 #[ApiResource(
     normalizationContext: ['groups' => ['read']],
     denormalizationContext: ['groups' => ['write']],
@@ -36,35 +34,57 @@ use App\State\UserPasswordHasherProcessor;
         new Delete(),
     ],
 )]
-class User
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_UUID', fields: ['uuid'])]
+#[ORM\HasLifecycleCallbacks]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('read')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 64)]
-    private ?string $slug = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180)]
     #[Groups('read')]
+    private ?string $uuid = null;
+
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    #[Groups(['read', 'write'])]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[Groups('read')]
+    #[ORM\Column]
     private ?string $password = null;
 
     #[Groups('write')]
     private ?string $plainPassword = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $role = null;
-
     /**
      * @var Collection<int, Order>
      */
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'waiter')]
+    #[Groups(['read', 'write'])]
     private Collection $orders;
 
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->uuid = null;
+    }
+
+    #[PrePersist]
+    public function generateUuid(): void
+    {
+        if ($this->uuid === null) {
+            $this->uuid = Uuid::v4()->toRfc4122();
+        }
     }
 
     public function getId(): ?int
@@ -72,19 +92,56 @@ class User
         return $this->id;
     }
 
-    public function getSlug(): ?string
+    public function getUuid(): ?string
     {
-        return $this->slug;
+        return $this->uuid;
     }
 
-    public function setSlug(string $slug): static
+    public function setUuid(string $uuid): static
     {
-        $this->slug = $slug;
+        $this->uuid = $uuid;
 
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->uuid;
+    }
+
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -108,16 +165,13 @@ class User
         return $this;
     }
 
-    public function getRole(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
     {
-        return $this->role;
-    }
-
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     /**
