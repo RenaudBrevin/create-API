@@ -36,6 +36,11 @@ use App\State\UserPasswordHasherProcessor;
         new Delete(),
     ],
 )]
+#[Post(security: "is_granted('ROLE_BOSS')")]
+#[Get(security: "is_granted('ROLE_BOSS')")]
+#[Put(security: "is_granted('ROLE_BOSS')")]
+#[Patch(security: "is_granted('ROLE_BOSS')")]
+#[Delete(security: "is_granted('ROLE_BOSS')")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

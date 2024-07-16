@@ -5,9 +5,32 @@ namespace App\Entity;
 use App\Repository\DrinkRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 
 #[ORM\Entity(repositoryClass: DrinkRepository::class)]
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext: ['groups' => ['drink:read']],
+    denormalizationContext: ['groups' => ['drink:write']],
+    operations: [
+        new GetCollection(),
+        new Post(),
+        new Get(),
+        new Put(),
+        new Patch(),
+        new Delete(),
+    ],
+)]
+#[Post(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_PATRON')")]
+#[Get(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_PATRON')")]
+#[Put(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_PATRON')")]
+#[Patch(security: "is_granted('ROLE_BOSS')")]
+#[Delete(security: "is_granted('ROLE_BARMAN') or is_granted('ROLE_PATRON')")]
 class Drink
 {
     #[ORM\Id]

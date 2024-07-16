@@ -6,10 +6,33 @@ use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
-#[ApiResource()]
+#[Get(security: "is_granted([ROLE_BOSS, ROLE_WAITER, ROLE_BARMAN])")]
+#[ApiResource(
+    normalizationContext: ['groups' => ['order:read']],
+    denormalizationContext: ['groups' => ['order:write']],
+    operations: [
+        new GetCollection(),
+        new Post(),
+        new Get(),
+        new Put(),
+        new Patch(),
+        new Delete(),
+    ],
+)]
+#[Post(security: "is_granted('ROLE_WAITER')")]
+#[Get(security: "is_granted('ROLE_BOSS') or is_granted('ROLE_WAITER') or is_granted('ROLE_BARMAN')")]
+#[Put(security: "is_granted('ROLE_WAITER') and object.getStatus() !== 'payée'")]
+#[Patch(security: "is_granted('ROLE_BOSS')")]
+#[Delete(security: "is_granted('ROLE_BOSS') or is_granted('ROLE_WAITER')")]
 class Order
 {
     #[ORM\Id]
