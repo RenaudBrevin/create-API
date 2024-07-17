@@ -1,3 +1,7 @@
+## Groups project
+ - Marc MOUREAU
+ - Brévin RENAUD
+
 ## Installation
 
 1. Navigate to the project directory:
