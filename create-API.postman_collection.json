@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ad736855-44bb-49f5-84e6-0b1b1b2f3d43",
+		"_postman_id": "747bfba2-534c-4fb2-a434-56fa90da38b9",
 		"name": "create-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29890779"
@@ -30,6 +30,16 @@
 				{
 					"name": "Get drink info",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjEyMDY0MjEsImV4cCI6MTcyMTIxMDAyMSwicm9sZXMiOlsiUk9MRV9CT1NTIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiMzNjMDZiZDQtMzc4OS00ODM4LWExY2EtMzZiZGQ1NDcwNjY1In0.X5coIzG1x1plSPI6bxYMvvTvvMxc4uZhYrwh0TjUhJPBncY44F4WbzzS_dOYDmtNjZrRISti17j96ch_V7SbPhP2wi6vKrKGNi0LvYEPGz50dDpPbJ2X1sh9C8k8U9O_Ql7QTa-ZOX3HVGPAgeWFlFTpfqCVl2ORP7vfnx0N7MMWqfL3yewWHLOhdc47bhNztH5qGtxS9EOKEvySJdZnVvkrUqZUnTLoH-WN0jmd6wRQfJJVvnt2cvxPx3jFhai8xt36cXu_vLo18lcPfD3dJjnTHYLoEUuX4vBJqwLefc5bPvnkSvKvEg2jtGsVfwGW5CWLTka9omSP35wtBfqBYg",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -86,6 +96,16 @@
 				{
 					"name": "List of users",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -237,7 +257,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"uuid\": \"username\",\r\n  \"roles\": [\r\n    \"ROLE_BOSS\"\r\n  ],\r\n  \"plainPassword\": \"password\",\r\n  \"orders\": [\r\n    \"orders\"\r\n  ]\r\n}",
+							"raw": "{\r\n  \"roles\": [\r\n    \"ROLE_BOSS\"\r\n  ],\r\n  \"plainPassword\": \"password\",\r\n  \"orders\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -270,7 +290,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"uuid\": \"uuid\",\r\n  \"password\": \"password\"\r\n}",
+							"raw": "{\r\n  \"uuid\": \"33c06bd4-3789-4838-a1ca-36bdd5470665\",\r\n  \"password\": \"password\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
